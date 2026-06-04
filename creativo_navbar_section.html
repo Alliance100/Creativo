@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creativo Clone - HTML & CSS Only</title>
+  <style>
+    :root {
+      --bg: #070707;
+      --bg-2: #0e1117;
+      --surface: #11151d;
+      --card: #141a24;
+      --card-2: #0f141d;
+      --text: #f5f7fb;
+      --muted: rgba(245, 247, 251, 0.72);
+      --soft: rgba(255, 255, 255, 0.08);
+      --soft-2: rgba(255, 255, 255, 0.12);
+      --primary: #a7ff4f;
+      --primary-2: #7ce337;
+      --accent: #7b8cff;
+      --radius: 24px;
+      --shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+      --max: 1200px;
+      --transition: 0.28s ease;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(167, 255, 79, 0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(123, 140, 255, 0.10), transparent 24%),
+        linear-gradient(180deg, #000 0%, #070707 40%, #090c12 100%);
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 96px 0;
+      position: relative;
+    }
+
+    .section-title {
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 999px;
+    }
+
+    h1, h2, h3, h4, h5, p { margin-top: 0; }
+
+    h1 {
+      font-size: clamp(2.9rem, 6vw, 5.1rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3.6vw, 3.3rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    p.lead,
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1.03rem;
+      line-height: 1.8;
+      max-width: 760px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform var(--transition), background var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #0a0a0a;
+      box-shadow: 0 16px 34px rgba(167, 255, 79, 0.18);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: var(--primary-2);
+      box-shadow: 0 18px 40px rgba(167, 255, 79, 0.26);
+    }
+
+    .btn-ghost {
+      border-color: var(--soft-2);
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(167, 255, 79, 0.06);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid var(--soft);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(167, 255, 79, 0.22);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .soft-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid var(--soft);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 22px 0 18px;
+    }
+
+    .brand {
+      font-size: 1.78rem;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      padding-top: 4px;
+      transition: transform var(--transition), opacity var(--transition);
+      white-space: nowrap;
+    }
+
+    .brand:hover { transform: translateY(-1px); opacity: 0.92; }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding-top: 4px;
+    }
+
+    .nav-link,
+    .drop-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 1.08rem;
+      color: rgba(255,255,255,0.9);
+      padding: 0 1px 12px;
+      transition: color var(--transition), opacity var(--transition);
+    }
+
+    .nav-link:hover,
+    .drop-link:hover { opacity: 1; color: #fff; }
+
+    .nav-link::after,
+    .drop-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition), background var(--transition);
+    }
+
+    .nav-link:hover::after,
+    .drop-link:hover::after,
+    .nav-link.active::after {
+      background: var(--primary);
+      transform: scaleX(1);
+    }
+
+    .nav-link.active { color: #fff; }
+
+    .dropdown { position: relative; }
+    .caret {
+      font-size: 0.75em;
+      transition: transform var(--transition);
+      transform: translateY(1px);
+    }
+
+    .dropdown:hover .caret { transform: translateY(1px) rotate(180deg); }
+
+    .dropdown-menu,
+    .submenu {
+      position: absolute;
+      min-width: 220px;
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.36);
+      z-index: 20;
+    }
+
+    .dropdown-menu { top: calc(100% + 12px); left: 0; }
+    .submenu { top: 0; left: 100%; margin-left: 10px; transform: translateX(-8px); }
+
+    .dropdown:hover .dropdown-menu,
+    .has-sub:hover .submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .submenu { transform: translateX(-8px); }
+    .has-sub:hover .submenu { transform: translateX(0); }
+
+    .dropdown-menu a,
+    .submenu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #f3f3f3;
+      font-size: 0.98rem;
+      transition: background var(--transition), transform var(--transition), color var(--transition);
+    }
+
+    .dropdown-menu a:hover,
+    .submenu a:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateX(4px);
+      color: #fff;
+    }
+
+    .right-icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 2px;
+      white-space: nowrap;
+    }
+
+    .icon-link {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      transition: transform var(--transition), background var(--transition), color var(--transition), opacity var(--transition);
+      border-radius: 50%;
+    }
+
+    .icon-link:hover {
+      transform: translateY(-2px);
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .icon-x { font-size: 1.05rem; border-radius: 0; width: auto; height: auto; padding: 0 2px; background: transparent; }
+
+    /* Hero */
+    .hero {
+      padding: 58px 0 88px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(16px);
+      pointer-events: none;
+      animation: drift 10s ease-in-out infinite;
+    }
+
+    .hero::before {
+      width: 260px;
+      height: 260px;
+      background: rgba(167, 255, 79, 0.08);
+      top: 10%;
+      right: -90px;
+    }
+
+    .hero::after {
+      width: 180px;
+      height: 180px;
+      background: rgba(123, 140, 255, 0.12);
+      bottom: 8%;
+      left: -50px;
+      animation-delay: -3s;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-copy .eyebrow { margin-bottom: 18px; }
+    .hero-copy .lead { max-width: 660px; margin-bottom: 26px; }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 30px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--soft);
+      color: #fff;
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
+      animation: popIn 0.9s ease both;
+    }
+
+    .badge:nth-child(2) { animation-delay: 0.08s; }
+    .badge:nth-child(3) { animation-delay: 0.16s; }
+
+    .badge:hover {
+      transform: translateY(-2px);
+      background: rgba(167, 255, 79, 0.08);
+      border-color: rgba(167, 255, 79, 0.22);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      animation: fadeUp 1s ease both;
+    }
+
+    .hero-frame {
+      width: min(100%, 560px);
+      aspect-ratio: 1 / 1;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(167, 255, 79, 0.22), transparent 20%),
+        radial-gradient(circle at 70% 75%, rgba(123, 140, 255, 0.18), transparent 24%),
+        linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transform: perspective(1200px) rotateY(-6deg);
+      transition: transform var(--transition);
+    }
+
+    .hero-frame:hover { transform: perspective(1200px) rotateY(-2deg) translateY(-4px); }
+
+    .hero-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.14), transparent 36%),
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.16) 100%);
+      opacity: 0.85;
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 26px;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 2px, transparent 2px 24px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 24px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-orb.one { width: 190px; height: 190px; background: rgba(167,255,79,0.18); top: 14%; left: 12%; }
+    .hero-orb.two { width: 110px; height: 110px; background: rgba(123,140,255,0.26); top: 58%; right: 14%; animation-delay: -2s; }
+    .hero-orb.three { width: 68px; height: 68px; background: rgba(255,255,255,0.2); bottom: 14%; left: 18%; animation-delay: -4s; }
+
+    .hero-stat {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 16px 18px;
+      width: min(290px, calc(100% - 36px));
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 1.45rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span { color: var(--muted); font-size: 0.96rem; }
+
+    /* About */
+    .about { background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03)); }
+    .about-visual {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .image-tile {
+      border-radius: 28px;
+      min-height: 340px;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(167,255,79,0.22), transparent 20%),
+        radial-gradient(circle at 75% 70%, rgba(123,140,255,0.22), transparent 22%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition);
+    }
+
+    .image-tile:hover { transform: translateY(-4px) scale(1.01); }
+
+    .image-tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.28) 100%);
+    }
+
+    .experience-badge {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      z-index: 1;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.54);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .experience-badge strong { display: block; font-size: 1.4rem; margin-bottom: 4px; }
+    .experience-badge span { color: var(--muted); font-size: 0.95rem; }
+
+    .about-copy .feature-list {
+      display: grid;
+      gap: 14px;
+      margin: 26px 0 28px;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 14px;
+      padding: 18px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .feature-item:hover {
+      transform: translateX(4px);
+      border-color: rgba(167,255,79,0.18);
+      background: rgba(167,255,79,0.06);
+    }
+
+    .feature-dot {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      color: #050505;
+      font-weight: 900;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .stat-box {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      text-align: center;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .stat-box:hover { transform: translateY(-4px); border-color: rgba(167,255,79,0.2); }
+    .stat-box strong { display: block; font-size: 2rem; margin-bottom: 6px; }
+    .stat-box span { color: var(--muted); font-size: 0.96rem; }
+
+    /* Services */
+    .service-card {
+      padding: 26px;
+      min-height: 250px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .service-index {
+      font-size: 0.95rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .service-card p { color: var(--muted); line-height: 1.75; }
+    .service-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      color: rgba(255,255,255,0.9);
+      display: grid;
+      gap: 8px;
+    }
+
+    .service-list li::before {
+      content: "•";
+      color: var(--primary);
+      margin-right: 8px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      margin-top: 22px;
+      color: var(--primary);
+      font-weight: 700;
+      transition: transform var(--transition), color var(--transition);
+    }
+
+    .service-link:hover { transform: translateX(4px); color: #d8ff9e; }
+
+    .popular-tag {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(167,255,79,0.12);
+      color: var(--primary);
+      border: 1px solid rgba(167,255,79,0.18);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .split-callout {
+      margin-top: 26px;
+      padding: 24px;
+      border-radius: 28px;
+      display: grid;
+      grid-template-columns: 1.2fr auto;
+      gap: 18px;
+      align-items: center;
+      background:
+        linear-gradient(135deg, rgba(167,255,79,0.12), rgba(123,140,255,0.08)),
+        rgba(255,255,255,0.04);
+      border: 1px solid rgba(167,255,79,0.16);
+    }
+
+    /* Why Us */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.95fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .why-quote {
+      padding: 28px;
+    }
+
+    .why-metrics {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 22px 0;
+    }
+
+    .metric {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      min-width: 170px;
+      transition: transform var(--transition);
+    }
+
+    .metric:hover { transform: translateY(-4px); }
+    .metric strong { display: block; font-size: 1.8rem; margin-bottom: 6px; }
+    .metric span { color: var(--muted); }
+
+    .why-features {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .why-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    .why-item:hover { transform: translateX(4px); border-color: rgba(167,255,79,0.18); background: rgba(167,255,79,0.05); }
+    .why-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #060606;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 38px;
+    }
+
+    .mini-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mini-card {
+      min-height: 180px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.48) 100%);
+    }
+
+    .mini-card > * { position: relative; z-index: 1; }
+    .mini-card .tag { color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+
+    /* Portfolio */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    .tab:hover { transform: translateY(-2px); border-color: rgba(167,255,79,0.18); background: rgba(167,255,79,0.06); }
+
+    .portfolio-card {
+      min-height: 290px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(167,255,79,0.18), transparent 18%),
+        radial-gradient(circle at 80% 70%, rgba(123,140,255,0.18), transparent 20%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    }
+
+    .portfolio-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 100%);
+    }
+
+    .portfolio-meta {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    .portfolio-meta span { display: inline-block; color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+
+    .portfolio-card:hover .portfolio-meta {
+      transform: translateY(-4px);
+    }
+
+    .portfolio-card,
+    .portfolio-meta {
+      transition: transform var(--transition);
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 280px;
+    }
+
+    .person {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(167,255,79,0.8), rgba(123,140,255,0.8));
+      box-shadow: 0 14px 24px rgba(0,0,0,0.25);
+      flex: 0 0 58px;
+      transition: transform var(--transition);
+    }
+
+    .testimonial-card:hover .avatar { transform: scale(1.05); }
+    .person small { color: var(--muted); }
+
+    .stars { color: var(--primary); letter-spacing: 2px; }
+
+    /* Team */
+    .team-card {
+      overflow: hidden;
+    }
+
+    .team-photo {
+      min-height: 290px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(167,255,79,0.25), transparent 18%),
+        radial-gradient(circle at 75% 70%, rgba(123,140,255,0.22), transparent 20%),
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      position: relative;
+    }
+
+    .team-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.48) 100%);
+    }
+
+    .team-body {
+      padding: 20px;
+    }
+
+    .team-role { color: var(--primary); font-weight: 700; margin-bottom: 6px; }
+    .team-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .social-mini {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--soft);
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
+    }
+
+    .social-mini:hover { transform: translateY(-2px); background: rgba(167,255,79,0.08); border-color: rgba(167,255,79,0.2); }
+
+    .team-banner {
+      margin-top: 26px;
+      padding: 26px;
+      display: grid;
+      grid-template-columns: 1.15fr auto;
+      gap: 16px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(167,255,79,0.12), rgba(123,140,255,0.10));
+      border: 1px solid rgba(167,255,79,0.14);
+      border-radius: 28px;
+    }
+
+    /* Pricing */
+    .price-card {
+      padding: 28px;
+      position: relative;
+    }
+
+    .price-label {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(167,255,79,0.12);
+      border: 1px solid rgba(167,255,79,0.18);
+      color: var(--primary);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .price {
+      font-size: 3rem;
+      line-height: 1;
+      margin: 12px 0 6px;
+      letter-spacing: -0.05em;
+    }
+
+    .price small { font-size: 0.96rem; color: var(--muted); font-weight: 400; }
+
+    .plan-list {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 10px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .plan-list li::before {
+      content: "✓";
+      color: var(--primary);
+      margin-right: 10px;
+      font-weight: 900;
+    }
+
+    .highlight {
+      border-color: rgba(167,255,79,0.2);
+      background: linear-gradient(180deg, rgba(167,255,79,0.06), rgba(255,255,255,0.03));
+      transform: translateY(-6px);
+    }
+
+    .feature-strip {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .strip-item {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      font-weight: 700;
+    }
+
+    .strip-item span { display: block; color: var(--muted); font-weight: 400; margin-top: 6px; }
+
+    .price-actions { margin-top: 22px; }
+
+    /* FAQ */
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .faq-left {
+      padding: 24px;
+      position: sticky;
+      top: 112px;
+    }
+
+    .faq-card details {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 18px 0;
+    }
+
+    .faq-card summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      font-size: 1.03rem;
+      transition: color var(--transition);
+    }
+
+    .faq-card summary::-webkit-details-marker { display: none; }
+    .faq-card summary:hover { color: var(--primary); }
+    .faq-card p { color: var(--muted); line-height: 1.8; margin: 14px 0 0; }
+
+    .faq-category {
+      display: grid;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .faq-pill {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+    }
+
+    .faq-pill strong { display: block; }
+    .faq-pill span { color: var(--muted); }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .contact-info {
+      display: grid;
+      gap: 16px;
+    }
+
+    .contact-box {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .contact-box:hover { transform: translateY(-3px); border-color: rgba(167,255,79,0.2); }
+    .contact-box strong { display: block; margin-bottom: 6px; }
+    .contact-box p { color: var(--muted); margin: 0; }
+
+    .contact-form {
+      padding: 26px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+      border-radius: 16px;
+      padding: 14px 15px;
+      font: inherit;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+
+    input:focus, textarea:focus {
+      border-color: rgba(167,255,79,0.32);
+      box-shadow: 0 0 0 4px rgba(167,255,79,0.08);
+      background: rgba(167,255,79,0.04);
+    }
+
+    textarea { min-height: 160px; resize: vertical; }
+
+    .form-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 72px 0 28px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin-top: 80px;
+      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.02) 100%);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.9fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .footer h4 {
+      margin-bottom: 14px;
+      font-size: 1.05rem;
+    }
+
+    .footer p,
+    .footer a,
+    .footer li { color: var(--muted); }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-links a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--soft);
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .footer-chip:hover { transform: translateY(-2px); border-color: rgba(167,255,79,0.2); background: rgba(167,255,79,0.06); }
+
+    /* Anchors / responsiveness */
+    section[id] { scroll-margin-top: 110px; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      50% { transform: translate(14px, -10px) scale(1.06); opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @media (max-width: 1100px) {
+      .navbar { flex-wrap: wrap; }
+      .brand { order: 1; }
+      .right-icons { order: 2; }
+      .nav-center {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 24px;
+        padding-top: 16px;
+      }
+
+      .hero-grid,
+      .grid-2,
+      .why-grid,
+      .faq-layout,
+      .contact-grid,
+      .footer-grid,
+      .team-banner,
+      .split-callout {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-4,
+      .stats-row,
+      .feature-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(100% - 24px, var(--max)); }
+      .section { padding: 76px 0; }
+      .hero { padding-top: 42px; }
+      .nav-center { gap: 18px 22px; }
+      .nav-link,
+      .drop-link { font-size: 1rem; }
+      .dropdown-menu,
+      .submenu {
+        position: static;
+        min-width: 100%;
+        margin: 10px 0 0;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .grid-3,
+      .grid-4,
+      .stats-row,
+      .feature-strip,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual { min-height: 420px; }
+      .hero-frame { transform: none; }
+      .hero-frame:hover { transform: translateY(-4px); }
+      .price { font-size: 2.5rem; }
+      .footer-bottom { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container">
+      <nav class="navbar" aria-label="Primary navigation">
+        <a href="#top" class="brand">Creativo</a>
+
+        <div class="nav-center">
+          <a href="#hero" class="nav-link active">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#portfolio" class="nav-link">Portfolio</a>
+          <a href="#team" class="nav-link">Team</a>
+
+          <div class="dropdown">
+            <a href="#faq" class="drop-link">Dropdown <span class="caret">⌄</span></a>
+            <div class="dropdown-menu">
+              <a href="#pricing">Dropdown 1</a>
+              <div class="has-sub">
+                <a href="#faq">Deep Dropdown <span class="caret">▸</span></a>
+                <div class="submenu">
+                  <a href="#faq">Deep Dropdown 1</a>
+                  <a href="#faq">Deep Dropdown 2</a>
+                  <a href="#faq">Deep Dropdown 3</a>
+                  <a href="#faq">Deep Dropdown 4</a>
+                  <a href="#faq">Deep Dropdown 5</a>
+                </div>
+              </div>
+              <a href="#portfolio">Dropdown 2</a>
+              <a href="#team">Dropdown 3</a>
+              <a href="#contact">Dropdown 4</a>
+            </div>
+          </div>
+
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+
+        <div class="right-icons" aria-label="Social links">
+          <a href="#" class="icon-link icon-x" aria-label="X">X</a>
+          <a href="#" class="icon-link" aria-label="Facebook">f</a>
+          <a href="#" class="icon-link" aria-label="Instagram">◎</a>
+          <a href="#" class="icon-link" aria-label="LinkedIn">in</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Creative Agency</div>
+          <h1>We Build Creative Solutions for Modern Brands</h1>
+          <p class="lead">A polished, flexible HTML and CSS-only landing page inspired by the Creativo demo. Smooth hover states, clean spacing, responsive layouts, and subtle motion give the page a premium feel without JavaScript or Bootstrap.</p>
+
+          <div class="hero-badges">
+            <div class="badge">150+ Projects Delivered</div>
+            <div class="badge">Brand Strategy & Identity</div>
+            <div class="badge">Web Design & Development</div>
+          </div>
+
+          <div class="btn-row">
+            <a href="#services" class="btn btn-primary">Discover Services</a>
+            <a href="#contact" class="btn btn-ghost">Schedule a Call</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-frame">
+            <div class="hero-art"></div>
+            <span class="hero-orb one"></span>
+            <span class="hero-orb two"></span>
+            <span class="hero-orb three"></span>
+            <div class="hero-stat">
+              <strong>Creative Digital Solutions</strong>
+              <span>Modern visuals, layered gradients, and motion-inspired composition.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">About</div>
+          <h2>Crafting Digital Excellence Through Innovation</h2>
+          <p class="section-subtitle">A clean about section with a strong visual block, feature rows, and key metrics that echo the original demo structure while staying fully built with plain HTML and CSS.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="about-visual">
+            <div class="image-tile">
+              <div class="experience-badge">
+                <strong>15+ Years Experience</strong>
+                <span>Creative leadership and client-focused execution</span>
+              </div>
+            </div>
+            <div class="image-tile"></div>
+          </div>
+
+          <div class="about-copy">
+            <div class="eyebrow">Who We Are</div>
+            <h2>Professional, strategic, and focused on growth</h2>
+            <p class="lead">The layout uses Flexbox and Grid for structure, with hover transitions on cards, buttons, and panels. The design keeps the section easy to scan while still feeling modern and premium.</p>
+
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-dot">1</div>
+                <div>
+                  <h3>Creative Strategy</h3>
+                  <p class="section-subtitle">Plan-focused solutions that shape brand direction and visual identity.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-dot">2</div>
+                <div>
+                  <h3>Growth Focused</h3>
+                  <p class="section-subtitle">Layout decisions and calls to action designed to guide user attention naturally.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-box"><strong>850+</strong><span>Projects Delivered</span></div>
+              <div class="stat-box"><strong>98%</strong><span>Client Satisfaction</span></div>
+              <div class="stat-box"><strong>45+</strong><span>Team Members</span></div>
+              <div class="stat-box"><strong>24/7</strong><span>Support</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">Services</div>
+          <h2>Solutions Designed for Modern Brands</h2>
+          <p class="section-subtitle">This services grid mirrors the demo’s card-based structure with clear hover motion and a highlighted featured service.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card service-card">
+            <div class="service-index">01</div>
+            <h3>Visual Identity Design</h3>
+            <p>Brand systems, logo direction, and visual language that feel clean and distinctive.</p>
+            <ul class="service-list"><li>Brand Strategy</li><li>Logo Creation</li></ul>
+            <a class="service-link" href="#portfolio">Discover More →</a>
+          </article>
+
+          <article class="card service-card">
+            <div class="service-index">02</div>
+            <h3>User Experience Crafting</h3>
+            <p>Careful layout structure and interface clarity for smooth digital journeys.</p>
+            <ul class="service-list"><li>Wireframing</li><li>Prototyping</li></ul>
+            <a class="service-link" href="#portfolio">Discover More →</a>
+          </article>
+
+          <article class="card service-card">
+            <div class="popular-tag">Popular</div>
+            <div class="service-index">03</div>
+            <h3>Web Application Development</h3>
+            <p>Responsive builds with performance, clarity, and scalable structure in mind.</p>
+            <ul class="service-list"><li>Frontend Build</li><li>Backend Systems</li></ul>
+            <a class="service-link" href="#contact">Discover More →</a>
+          </article>
+        </div>
+
+        <div style="height:22px"></div>
+
+        <div class="grid-3">
+          <article class="card service-card">
+            <div class="service-index">04</div>
+            <h3>Mobile App Engineering</h3>
+            <p>Elegant responsive-first thinking that adapts to smaller screens naturally.</p>
+            <ul class="service-list"><li>iOS & Android</li><li>Cross Platform</li></ul>
+            <a class="service-link" href="#team">Discover More →</a>
+          </article>
+
+          <article class="card service-card">
+            <div class="service-index">05</div>
+            <h3>Digital Growth Marketing</h3>
+            <p>Simple content hierarchy and conversion-ready design for marketing goals.</p>
+            <a class="service-link" href="#pricing">Discover More →</a>
+          </article>
+
+          <article class="card service-card">
+            <div class="service-index">06</div>
+            <h3>Analytics & SEO Solutions</h3>
+            <p>Organized sections and semantic markup that help search visibility and usability.</p>
+            <a class="service-link" href="#faq">Discover More →</a>
+          </article>
+        </div>
+
+        <div class="split-callout">
+          <div>
+            <div class="eyebrow">Transform Your Business Vision</div>
+            <h3 style="margin-bottom:6px;">Partner with specialists for exceptional results</h3>
+            <p class="section-subtitle" style="margin:0;">A strong final service callout with a smooth gradient and bold action area, built without scripts.</p>
+          </div>
+          <a href="#contact" class="btn btn-primary">Launch Your Project</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="why-us">
+      <div class="container why-grid">
+        <div class="card why-quote">
+          <div class="eyebrow">Why Us</div>
+          <h2>Discover What Sets Us Apart</h2>
+          <p class="lead">This section combines metrics, feature cards, and supporting panels to mirror the richness of the source layout while staying simple to maintain.</p>
+
+          <div class="why-metrics">
+            <div class="metric"><strong>98%</strong><span>Success Rate</span></div>
+            <div class="metric"><strong>150+</strong><span>Projects Delivered</span></div>
+          </div>
+
+          <div class="why-features">
+            <div class="why-item"><div class="why-icon">1</div><div><h3>Innovative Solutions</h3><p class="section-subtitle">Fresh visual thinking with a practical user-first structure.</p></div></div>
+            <div class="why-item"><div class="why-icon">2</div><div><h3>Rapid Deployment</h3><p class="section-subtitle">Carefully grouped sections make the page easy to scan and build.</p></div></div>
+            <div class="why-item"><div class="why-icon">3</div><div><h3>Secure & Reliable</h3><p class="section-subtitle">No JavaScript dependencies, only semantic HTML and stable CSS.</p></div></div>
+            <div class="why-item"><div class="why-icon">4</div><div><h3>Round-the-Clock Support</h3><p class="section-subtitle">A layout that is straightforward to continue section by section.</p></div></div>
+          </div>
+        </div>
+
+        <div class="mini-grid">
+          <article class="card mini-card" style="background: radial-gradient(circle at top left, rgba(167,255,79,0.16), transparent 24%), linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
+            <div class="tag">Design</div>
+            <h3>Creative Excellence</h3>
+            <p class="section-subtitle">A visual-first block that uses hover motion and subtle depth.</p>
+            <a class="service-link" href="#portfolio">Explore More →</a>
+          </article>
+          <article class="card mini-card" style="background: radial-gradient(circle at top left, rgba(123,140,255,0.18), transparent 24%), linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
+            <div class="tag">Growth</div>
+            <h3>Measurable Results</h3>
+            <p class="section-subtitle">A clear card system designed for marketing and business presentation.</p>
+            <a class="service-link" href="#pricing">Explore More →</a>
+          </article>
+          <article class="card mini-card" style="background: radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 24%), linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));">
+            <div class="tag">Team</div>
+            <h3>Skilled Professionals</h3>
+            <p class="section-subtitle">The design uses strong grid alignment for polish and readability.</p>
+            <a class="service-link" href="#team">Explore More →</a>
+          </article>
+        </div>
+
+        <div class="team-banner">
+          <div>
+            <div class="eyebrow">Ready to Transform Your Vision?</div>
+            <h3 style="margin-bottom:6px;">Launch with confidence and clarity</h3>
+            <p class="section-subtitle" style="margin:0;">This banner gives the page a strong CTA moment between informational and promotional sections.</p>
+          </div>
+          <div class="btn-row" style="justify-content:flex-end;">
+            <a href="#contact" class="btn btn-primary">Launch Your Project</a>
+            <a href="#portfolio" class="btn btn-ghost">Browse Work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">Portfolio</div>
+          <h2>Selected Work</h2>
+          <p class="section-subtitle">A filter-like tab row and hover-reveal portfolio cards recreate the demo feel without using any JavaScript.</p>
+        </div>
+
+        <div class="tabs" aria-label="Portfolio filters">
+          <span class="tab">All</span>
+          <span class="tab">Web</span>
+          <span class="tab">Branding</span>
+          <span class="tab">Campaign</span>
+          <span class="tab">Print</span>
+        </div>
+
+        <div class="grid-4">
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Web Design</span><h3>Digital Platform</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Branding</span><h3>Visual Identity</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Campaign</span><h3>Launch Strategy</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Print</span><h3>Editorial Design</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Web Design</span><h3>Interface System</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Branding</span><h3>Brand Refresh</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Campaign</span><h3>Market Expansion</h3></div></article>
+          <article class="card portfolio-card"><div class="portfolio-meta"><span>Print</span><h3>Publication Series</h3></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">Testimonials</div>
+          <h2>Client Feedback</h2>
+          <p class="section-subtitle">Cards use hover lift and avatar accents to keep the section visually engaging while staying easy to read.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="lead">A polished experience from start to finish. The layout feels premium and communicates the service clearly.</p>
+            <div class="person"><div class="avatar"></div><div><strong>Sophia Anderson</strong><br><small>Creative Director · DesignHub</small></div></div>
+          </article>
+          <article class="card testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="lead">The structure is smooth, modern, and responsive. It works perfectly as a clean template base.</p>
+            <div class="person"><div class="avatar"></div><div><strong>Marcus Thompson</strong><br><small>Software Architect · CloudSystems</small></div></div>
+          </article>
+          <article class="card testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="lead">Strong spacing, elegant hover motion, and a balanced palette. Very easy to continue section by section.</p>
+            <div class="person"><div class="avatar"></div><div><strong>Elena Kowalski</strong><br><small>Brand Strategist · MediaPulse</small></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="team">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">Team</div>
+          <h2>Skilled Professionals</h2>
+          <p class="section-subtitle">A clean team grid with hover transitions and inline social links keeps the section consistent with the rest of the page.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card team-card"><div class="team-photo"></div><div class="team-body"><div class="team-role">Chief Executive Officer</div><h3>Sophia Anderson</h3><p class="section-subtitle">Leadership that keeps design, performance, and brand direction aligned.</p><div class="team-links"><a href="#" class="social-mini">f</a><a href="#" class="social-mini">◎</a><a href="#" class="social-mini">in</a></div></div></article>
+          <article class="card team-card"><div class="team-photo"></div><div class="team-body"><div class="team-role">Technical Director</div><h3>Marcus Chen</h3><p class="section-subtitle">Focused on responsive structure and maintainable front-end builds.</p><div class="team-links"><a href="#" class="social-mini">f</a><a href="#" class="social-mini">◎</a><a href="#" class="social-mini">in</a></div></div></article>
+          <article class="card team-card"><div class="team-photo"></div><div class="team-body"><div class="team-role">Creative Lead</div><h3>Emma Richardson</h3><p class="section-subtitle">Responsible for the visual rhythm and motion details across the page.</p><div class="team-links"><a href="#" class="social-mini">f</a><a href="#" class="social-mini">◎</a><a href="#" class="social-mini">in</a></div></div></article>
+        </div>
+
+        <div style="height:22px"></div>
+
+        <div class="grid-3">
+          <article class="card team-card"><div class="team-photo"></div><div class="team-body"><div class="team-role">Growth Strategist</div><h3>Brandon Walsh</h3><p class="section-subtitle">Helps make the call-to-action placement feel natural and effective.</p></div></article>
+          <article class="card team-card"><div class="team-photo"></div><div class="team-body"><div class="team-role">Product Strategist</div><h3>Olivia Martinez</h3><p class="section-subtitle">Keeps the structure focused on clarity, hierarchy, and usability.</p></div></article>
+          <article class="card team-card"><div class="team-photo"></div><div class="team-body"><div class="team-role">Lead Developer</div><h3>Ryan Thompson</h3><p class="section-subtitle">Ensures the final HTML is tidy, semantic, and easy to continue.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">Pricing</div>
+          <h2>Flexible Plans</h2>
+          <p class="section-subtitle">The pricing cards use a strong visual hierarchy and transition effects to echo the original landing page structure.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card price-card">
+            <div class="price-label">Essential</div>
+            <h3>Perfect for individuals</h3>
+            <div class="price">$19 <small>/mo</small></div>
+            <p class="section-subtitle">Charged each month. $228 billed annually.</p>
+            <ul class="plan-list">
+              <li>3 active projects</li>
+              <li>5 GB secure storage</li>
+              <li>Email assistance</li>
+              <li>Standard reports</li>
+            </ul>
+            <div class="price-actions"><a href="#contact" class="btn btn-ghost" style="width:100%;">Choose Essential</a></div>
+          </article>
+
+          <article class="card price-card highlight">
+            <div class="price-label">Growth</div>
+            <h3>Ideal for growing teams</h3>
+            <div class="price">$47 <small>/mo</small></div>
+            <p class="section-subtitle">Charged each month. $564 billed annually.</p>
+            <ul class="plan-list">
+              <li>Unlimited projects</li>
+              <li>50 GB secure storage</li>
+              <li>Live chat support</li>
+              <li>Advanced analytics</li>
+              <li>API access</li>
+              <li>Team workspaces</li>
+            </ul>
+            <div class="price-actions"><a href="#contact" class="btn btn-primary" style="width:100%;">Begin Free Trial</a></div>
+          </article>
+
+          <article class="card price-card">
+            <div class="price-label">Business</div>
+            <h3>For large organizations</h3>
+            <div class="price">Let’s Talk</div>
+            <p class="section-subtitle">Customized for your needs.</p>
+            <ul class="plan-list">
+              <li>All Growth features</li>
+              <li>Unlimited storage</li>
+              <li>Dedicated support rep</li>
+              <li>Custom integrations</li>
+              <li>Enterprise SLA</li>
+            </ul>
+            <div class="price-actions"><a href="#contact" class="btn btn-ghost" style="width:100%;">Request Demo</a></div>
+          </article>
+        </div>
+
+        <div class="feature-strip">
+          <div class="strip-item">256-bit Encryption<span>Bank-level security</span></div>
+          <div class="strip-item">99.99% Uptime<span>Reliable service</span></div>
+          <div class="strip-item">Hourly Backups<span>Data protection</span></div>
+          <div class="strip-item">SOC 2 Certified<span>Industry compliant</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container faq-layout">
+        <div class="card faq-left">
+          <div class="eyebrow">Frequently Asked Questions</div>
+          <h2>Still need help?</h2>
+          <p class="lead">A CSS-only accordion built with details and summary keeps the interaction accessible and simple.</p>
+          <div class="faq-category">
+            <div class="faq-pill"><div><strong>General</strong><span>5 questions</span></div><div>›</div></div>
+            <div class="faq-pill"><div><strong>Billing</strong><span>4 questions</span></div><div>›</div></div>
+            <div class="faq-pill"><div><strong>Technical</strong><span>6 questions</span></div><div>›</div></div>
+          </div>
+          <div style="margin-top:18px;"><a href="#contact" class="btn btn-primary">Get in Touch</a></div>
+        </div>
+
+        <div class="card faq-card" style="padding: 6px 24px 6px;">
+          <details open><summary>Vivamus suscipit tortor eget felis porttitor volutpat?</summary><p>Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Donec rutrum congue leo eget malesuada. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.</p></details>
+          <details><summary>Nulla quis lorem ut libero malesuada feugiat proin?</summary><p>Nulla porttitor accumsan tincidunt mauris blandit aliquet elit eget tincidunt nibh pulvinar a. Vivamus suscipit tortor eget felis porttitor volutpat sed porttitor lectus nibh.</p></details>
+          <details><summary>Quisque velit nisi pretium ut lacinia elementum?</summary><p>Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec sollicitudin molestie malesuada pellentesque in ipsum id orci porta dapibus.</p></details>
+          <details><summary>Mauris blandit aliquet elit eget tincidunt nibh?</summary><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p></details>
+          <details><summary>Cras ultricies ligula sed magna dictum porta?</summary><p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores.</p></details>
+          <details><summary>Pellentesque habitant morbi tristique senectus?</summary><p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Proin ac nunc at felis tristique condimentum sit amet vel risus.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">Contact</div>
+          <h2>Share Your Vision With Us</h2>
+          <p class="section-subtitle">The contact area combines information cards, a message form, and another stat panel for a strong closing section.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-box"><strong>Drop Us a Line</strong><p>Quick replies within 3 hours</p></div>
+            <div class="contact-box"><strong>Give Us a Ring</strong><p>+1 (555) 234-8901 · Mon-Fri 8AM - 7PM CST</p></div>
+            <div class="contact-box"><strong>Stop By</strong><p>1523 Oak Avenue, Chicago, IL 60614 · Walk-ins welcome</p></div>
+            <div class="contact-box"><strong>Why Partner With Us?</strong><p>12h Response Time · 97% Happy Clients · 280+ Completed Works · 15+ Years Experience</p></div>
+          </div>
+
+          <form class="card contact-form">
+            <div class="eyebrow">Launch Message</div>
+            <h3>Send a project inquiry</h3>
+            <p class="section-subtitle">A simple, accessible form that matches the rest of the layout visually.</p>
+
+            <div class="form-grid">
+              <div class="field"><label for="name">Your Name</label><input id="name" type="text" placeholder="Enter your name" /></div>
+              <div class="field"><label for="email">Email Address</label><input id="email" type="email" placeholder="Enter your email" /></div>
+              <div class="field full"><label for="subject">Subject</label><input id="subject" type="text" placeholder="Project subject" /></div>
+              <div class="field full"><label for="message">Message</label><textarea id="message" placeholder="Tell us about your project"></textarea></div>
+            </div>
+
+            <div class="btn-row" style="margin-top:18px;">
+              <button class="btn btn-primary" type="button">Launch Message</button>
+              <span class="form-note">Quick replies within 3 hours.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#top" class="brand" style="display:inline-block; margin-bottom:14px;">Creativo</a>
+          <p>Modern HTML and CSS-only creative agency layout inspired by the demo structure. Built to be expanded section by section.</p>
+          <div class="footer-social" style="margin-top:18px;">
+            <a class="footer-chip" href="#">X</a>
+            <a class="footer-chip" href="#">f</a>
+            <a class="footer-chip" href="#">◎</a>
+            <a class="footer-chip" href="#">in</a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Careers</a></li>
+            <li><a href="#portfolio">Press</a></li>
+            <li><a href="#contact">Blog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Solutions</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Digital Strategy</a></li>
+            <li><a href="#services">Cloud Computing</a></li>
+            <li><a href="#services">Data Analytics</a></li>
+            <li><a href="#services">AI Solutions</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Get in Touch</h4>
+          <p>2847 Maple Avenue<br/>Los Angeles, CA 90210<br/>United States</p>
+          <p>+1 (555) 987-6543<br/>[email protected]</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© Copyright Creativo All Rights Reserved</div>
+        <div class="footer-social">
+          <a class="footer-chip" href="#">Privacy Policy</a>
+          <a class="footer-chip" href="#">Terms of Service</a>
+          <a class="footer-chip" href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
